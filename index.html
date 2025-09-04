@@ -1,3 +1,6 @@
+---
+layout: null
+---
 <!doctype html>
 <html lang="en">
 <head>
@@ -222,17 +225,23 @@
   <section id="gallery">
     <div class="container">
       <h2 data-i18n="gallery_title">Photo gallery</h2>
+
       <div class="grid" aria-label="Photo gallery">
-        <!-- Add your images to /images and duplicate these lines -->
-        <div class="thumb"><img src="images/pag-01.webp" alt="Apartment interior" loading="lazy"></div>
-        <div class="thumb"><img src="images/pag-02.webp" alt="Bedroom" loading="lazy"></div>
-        <div class="thumb"><img src="images/pag-03.webp" alt="Kitchen" loading="lazy"></div>
-        <div class="thumb"><img src="images/pag-04.webp" alt="Balcony" loading="lazy"></div>
-        <div class="thumb"><img src="images/pag-05.webp" alt="Sea view" loading="lazy"></div>
-        <div class="thumb"><img src="images/pag-06.webp" alt="Old Town Pag" loading="lazy"></div>
+        {% assign imgs = site.static_files | where_exp: "i", "i.path contains '/images/'" %}
+        {% for file in imgs %}
+          {% assign ext = file.extname | downcase %}
+          {% if ext == '.webp' or ext == '.jpg' or ext == '.jpeg' or ext == '.png' or ext == '.gif' %}
+            <div class="thumb">
+              <img src="{{ file.path | relative_url }}"
+                   alt="{{ file.name | split: '.' | first | replace:'-',' ' | replace:'_',' ' | capitalize }}"
+                   loading="lazy">
+            </div>
+          {% endif %}
+        {% endfor %}
       </div>
     </div>
   </section>
+
 
   <!-- Videos -->
   <section id="videos">
