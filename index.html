@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DKVKOS Apartments — Pag</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      /* Sea-inspired palette */
+      --bg:#0b1220; --panel:#121a2b; --text:#eef4ff; --muted:#a9b6d3;
+      --brand:#47b3ff; --accent:#6ff0c4; --ring:rgba(71,179,255,.5);
+      --radius:14px; --shadow:0 12px 32px rgba(0,0,0,.35);
+      --container:1150px; --header-h:64px;
+    }
+    @media (prefers-color-scheme: light){
+      :root{ --bg:#f6f9ff; --panel:#ffffff; --text:#0b1220; --muted:#596482; --shadow:0 8px 22px rgba(0,0,0,.08) }
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(71,179,255,.12), transparent 60%),
+        radial-gradient(1200px 600px at 90% 10%, rgba(111,240,196,.12), transparent 60%),
+        var(--bg);
+    }
+    a{color:inherit; text-decoration:none}
+    img{max-width:100%; display:block}
+    .container{max-width:var(--container); margin-inline:auto; padding-inline:18px}
+
+    /* Header */
+    header{position:sticky; top:0; z-index:1000; height:var(--header-h);
+      backdrop-filter:saturate(1.2) blur(8px);
+      background:color-mix(in oklab, var(--panel) 82%, transparent);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .nav{display:flex; align-items:center; justify-content:space-between; height:var(--header-h); gap:12px}
+    .brand{font-weight:800; font-size:1.05rem; white-space:nowrap}
+    .links{display:flex; align-items:center; gap:18px; flex-wrap:wrap}
+    .links a{padding:8px 10px; border-radius:10px; color:var(--muted); font-weight:600}
+    .links a:hover,.links a:focus-visible{color:var(--text); outline:2px solid var(--ring); outline-offset:2px}
+    .cta{background:linear-gradient(90deg, var(--brand), var(--accent)); color:#06121a;
+      font-weight:800; padding:10px 14px; border-radius:12px; box-shadow:var(--shadow)}
+    .menu-btn{display:none; border:1px solid rgba(255,255,255,.18); background:var(--panel); height:38px; width:42px; border-radius:10px; align-items:center; justify-content:center; box-shadow:var(--shadow); cursor:pointer}
+    .menu-btn span{display:block; width:20px; height:2px; background:var(--text); position:relative}
+    .menu-btn span::before,.menu-btn span::after{content:""; position:absolute; left:0; right:0; height:2px; background:var(--text)}
+    .menu-btn span::before{top:-6px}.menu-btn span::after{top:6px}
+    .lang-toggle{border:1px solid rgba(255,255,255,.18); background:var(--panel); padding:8px 10px; border-radius:10px; font-weight:700}
+    @media (max-width:880px){
+      .menu-btn{display:flex}
+      .links{position:fixed; inset:var(--header-h) 0 auto 0; padding:14px 18px 22px; background:var(--panel); box-shadow:var(--shadow);
+        transform:translateY(-16px); opacity:0; pointer-events:none; transition:.2s ease; display:grid; gap:10px}
+      .links.open{transform:translateY(0); opacity:1; pointer-events:auto}
+    }
+
+    /* Sections */
+    section{padding:70px 0}
+    section:where(#about,#apartments,#amenities,#gallery,#videos,#location,#contact){scroll-margin-top:calc(var(--header-h) + 14px)}
+
+    /* Hero */
+    .hero{padding:70px 0 60px}
+    .hero-card{
+      background:linear-gradient(180deg, color-mix(in oklab, var(--panel) 95%, transparent), color-mix(in oklab, var(--panel) 80%, transparent));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:calc(var(--radius) + 6px); padding:36px 26px; box-shadow:var(--shadow);
+      display:grid; grid-template-columns:1.2fr .9fr; gap:24px; align-items:center;
+    }
+    .hero h1{margin:0 0 10px; font-size:clamp(1.9rem,1.4rem + 2.4vw,3.1rem)}
+    .tagline{color:var(--muted); margin:0 0 18px}
+    .hero-media{aspect-ratio:16/10; border-radius:12px; overflow:hidden; background:url('images/hero.jpg') center/cover no-repeat; border:1px solid rgba(255,255,255,.08)}
+    @media (max-width:900px){.hero-card{grid-template-columns:1fr}.hero-media{order:-1; aspect-ratio:16/9}}
+
+    .features{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:18px}
+    .feature{background:var(--panel); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); padding:12px; box-shadow:var(--shadow); color:var(--muted)}
+    .feature b{display:block; color:var(--text); margin-bottom:4px}
+    @media (max-width:950px){.features{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:560px){.features{grid-template-columns:1fr}}
+
+    /* Grids / cards */
+    .split{display:grid; grid-template-columns:1.1fr .9fr; gap:24px}
+    .panel{background:var(--panel); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow)}
+    @media (max-width:900px){.split{grid-template-columns:1fr}}
+    .cards{display:grid; gap:16px; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr))}
+    .card{background:var(--panel); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow)}
+    .badge{display:inline-block; font-size:.8rem; padding:4px 8px; border-radius:999px; background:color-mix(in oklab, var(--brand) 22%, transparent); border:1px solid rgba(255,255,255,.12); margin-bottom:8px}
+
+    /* Gallery */
+    .grid{display:grid; gap:10px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr))}
+    .grid .thumb{border-radius:var(--radius); overflow:hidden; border:1px solid rgba(255,255,255,.08); background:var(--panel)}
+    .grid img{width:100%; aspect-ratio:4/3; object-fit:cover; cursor:pointer}
+    .lightbox{position:fixed; inset:0; background:rgba(0,0,0,.85); display:none; align-items:center; justify-content:center; z-index:2000}
+    .lightbox.open{display:flex}
+    .lightbox img{max-width:92vw; max-height:90vh; border-radius:10px}
+    .lightbox-close{position:fixed; top:16px; right:16px; background:#000; color:#fff; border:1px solid #444; padding:6px 10px; border-radius:8px; cursor:pointer}
+
+    /* Video grid */
+    .video-grid{display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr))}
+    iframe{width:100%; aspect-ratio:16/9; border:0; border-radius:12px; box-shadow:var(--shadow); background:var(--panel); border:1px solid rgba(255,255,255,.08)}
+
+    footer{padding:28px 18px; color:var(--muted); text-align:center}
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <div class="brand" data-i18n="brand">DKVKOS Apartments — Pag</div>
+
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span>
+      </button>
+
+      <nav class="links" id="navLinks">
+        <a href="#about" data-i18n="nav_about">About</a>
+        <a href="#apartments" data-i18n="nav_apart">Apartments</a>
+        <a href="#amenities" data-i18n="nav_amen">Amenities</a>
+        <a href="#gallery" data-i18n="nav_gallery">Gallery</a>
+        <a href="#videos" data-i18n="nav_videos">Videos</a>
+        <a href="#location" data-i18n="nav_location">Location</a>
+        <a href="#contact" class="cta" data-i18n="nav_book">Book</a>
+        <button class="lang-toggle" id="langToggle" aria-label="Promijeni jezik">HR / EN</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-card">
+        <div>
+          <h1 data-i18n="hero_title">Seaside apartments in Pag</h1>
+          <p class="tagline" data-i18n="hero_tag">Wake up to the Adriatic. Modern, air-conditioned apartments for 2–5 guests — just a short walk to the beach.</p>
+          <a href="#apartments" class="cta" data-i18n="hero_cta">View apartments →</a>
+
+          <div class="features">
+            <div class="feature"><b data-i18n="f1t">Sea & city</b><span data-i18n="f1d">Central Pag location, close to beaches and Old Town.</span></div>
+            <div class="feature"><b data-i18n="f2t">Comfort</b><span data-i18n="f2d">AC, fast Wi-Fi, smart TV, equipped kitchen.</span></div>
+            <div class="feature"><b data-i18n="f3t">Parking</b><span data-i18n="f3d">Free private parking on site.</span></div>
+            <div class="feature"><b data-i18n="f4t">Family-friendly</b><span data-i18n="f4d">Crib / high chair on request, quiet street.</span></div>
+          </div>
+        </div>
+        <div class="hero-media" role="img" aria-label="Sea view"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container split">
+      <div class="panel">
+        <h2 data-i18n="about_title">About DKVKOS</h2>
+        <p data-i18n="about_p1">DKVKOS offers bright, freshly renovated apartments in the town of Pag. Everything you need for a relaxing seaside stay is within walking distance—beach, bakeries, cafés, and the stone streets of the Old Town.</p>
+        <p data-i18n="about_p2">We host couples, families and small groups year-round and speak English & Croatian.</p>
+      </div>
+      <div class="panel">
+        <h3 data-i18n="about_high">Highlights</h3>
+        <ul>
+          <li data-i18n="h1">2–5 guests per unit</li>
+          <li data-i18n="h2">Balcony or terrace (select units)</li>
+          <li data-i18n="h3">Self check-in available</li>
+          <li data-i18n="h4">Non-smoking, no parties</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Apartments -->
+  <section id="apartments">
+    <div class="container">
+      <h2 data-i18n="apart_title">Apartments</h2>
+      <div class="cards">
+        <div class="card">
+          <span class="badge" data-i18n="a1_badge">Sleeps 2–3</span>
+          <h3 data-i18n="a1_title">Studio Sea View</h3>
+          <p data-i18n="a1_text">Open-plan studio with queen bed + single sofa, kitchenette, AC, balcony with partial sea view.</p>
+          <p><b data-i18n="a_from1">From € — / night</b></p>
+        </div>
+        <div class="card">
+          <span class="badge" data-i18n="a2_badge">Sleeps 3–4</span>
+          <h3 data-i18n="a2_title">One-Bedroom Balcony</h3>
+          <p data-i18n="a2_text">Separate bedroom + living room with sofa bed, full kitchen, AC, balcony.</p>
+          <p><b data-i18n="a_from2">From € — / night</b></p>
+        </div>
+        <div class="card">
+          <span class="badge" data-i18n="a3_badge">Sleeps 4–5</span>
+          <h3 data-i18n="a3_title">Two-Bedroom Family</h3>
+          <p data-i18n="a3_text">Two bedrooms, living room, equipped kitchen, AC, terrace for morning coffee.</p>
+          <p><b data-i18n="a_from3">From € — / night</b></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Amenities -->
+  <section id="amenities">
+    <div class="container split">
+      <div class="panel">
+        <h2 data-i18n="amen_title">Amenities</h2>
+        <ul>
+          <li data-i18n="am1">Fast Wi-Fi</li>
+          <li data-i18n="am2">Air conditioning</li>
+          <li data-i18n="am3">Smart TV</li>
+          <li data-i18n="am4">Equipped kitchen</li>
+          <li data-i18n="am5">Fresh linens & towels</li>
+          <li data-i18n="am6">Washing machine (select units / shared)</li>
+          <li data-i18n="am7">Free private parking</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h2 data-i18n="near_title">Nearby</h2>
+        <ul>
+          <li data-i18n="nr1">Beaches within a short walk</li>
+          <li data-i18n="nr2">Old Town Pag — cafés, bakeries, shops</li>
+          <li data-i18n="nr3">Restaurants with fresh seafood</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery (photos) -->
+  <section id="gallery">
+    <div class="container">
+      <h2 data-i18n="gallery_title">Photo gallery</h2>
+      <div class="grid" aria-label="Photo gallery">
+        <!-- Add your images to /images and duplicate these lines -->
+        <div class="thumb"><img src="images/pag-01.webp" alt="Apartment interior" loading="lazy"></div>
+        <div class="thumb"><img src="images/pag-02.webp" alt="Bedroom" loading="lazy"></div>
+        <div class="thumb"><img src="images/pag-03.webp" alt="Kitchen" loading="lazy"></div>
+        <div class="thumb"><img src="images/pag-04.webp" alt="Balcony" loading="lazy"></div>
+        <div class="thumb"><img src="images/pag-05.webp" alt="Sea view" loading="lazy"></div>
+        <div class="thumb"><img src="images/pag-06.webp" alt="Old Town Pag" loading="lazy"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Videos -->
+  <section id="videos">
+    <div class="container">
+      <h2 data-i18n="videos_title">Videos</h2>
+      <div class="video-grid">
+        <!-- Replace VIDEO_ID_* or src with your hosted videos -->
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" title="Apartment tour" loading="lazy" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" title="Pag highlights" loading="lazy" allowfullscreen></iframe>
+        <!-- Example if you host MP4 elsewhere:
+        <video controls preload="none" poster="images/video-thumb1.jpg">
+          <source src="https://cdn.example.com/videos/dkvkos-tour.mp4" type="video/mp4">
+        </video>
+        -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Location with embedded map -->
+  <section id="location">
+    <div class="container split">
+      <div class="panel">
+        <h2 data-i18n="loc_title">Location — Pag, Croatia</h2>
+        <p data-i18n="loc_txt">We are in the town of Pag on the island of Pag. Exact address provided with booking. Free parking on site.</p>
+        <p><a class="cta" href="#contact" data-i18n="loc_cta">Check availability →</a></p>
+      </div>
+      <div class="panel">
+        <!-- Map centered on Pag; replace query with your precise address if you want -->
+        <iframe
+          src="https://www.google.com/maps?q=Pag%2C%20Croatia&z=14&output=embed"
+          title="Map — Pag"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          style="width:100%; aspect-ratio:16/9; border:0; border-radius:12px">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact / Book -->
+  <section id="contact">
+    <div class="container split">
+      <div class="panel">
+        <h2 data-i18n="contact_title">Contact & booking</h2>
+        <p data-i18n="contact_txt">Tell us your dates, number of guests, and preferred unit. We’ll reply with availability and a quote.</p>
+        <p>
+          <b data-i18n="email">Email:</b> <a href="mailto:info@dkvkos.hr">info@dkvkos.hr</a><br>
+          <b data-i18n="phone">Phone:</b> <a href="tel:+3850000000">+385 00 000 000</a>
+        </p>
+        <p>
+          <a class="cta" href="mailto:info@dkvkos.hr?subject=Booking%20inquiry%20DKVKOS%20Pag&body=Dates%3A%0AGuests%3A%0AUnit%3A" data-i18n="book_btn">Book now via email →</a>
+        </p>
+      </div>
+      <div class="panel">
+        <h3 data-i18n="policy_title">House rules</h3>
+        <ul>
+          <li data-i18n="pol1">No smoking • No parties</li>
+          <li data-i18n="pol2">Quiet hours 22:00–08:00</li>
+          <li data-i18n="pol3">Pets on request (subject to availability)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span data-i18n="footer">© 2025 DKVKOS Apartments — Pag</span>
+  </footer>
+
+  <!-- Lightbox for photos -->
+  <div class="lightbox" id="lightbox" aria-modal="true" role="dialog">
+    <button class="lightbox-close" id="lightboxClose">✕</button>
+    <img id="lightboxImg" alt="">
+  </div>
+
+  <script>
+    // --- Mobile menu ---
+    const btn = document.getElementById('menuBtn');
+    const links = document.getElementById('navLinks');
+    btn.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      links.classList.remove('open'); btn.setAttribute('aria-expanded','false');
+    }));
+
+    // --- Simple lightbox ---
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightboxImg');
+    const lbClose = document.getElementById('lightboxClose');
+    document.querySelectorAll('#gallery img').forEach(img=>{
+      img.addEventListener('click', ()=>{ lbImg.src = img.src; lb.classList.add('open'); });
+    });
+    lb.addEventListener('click', (e)=>{ if(e.target===lb || e.target===lbClose) lb.classList.remove('open'); });
+
+    // --- Translations ---
+    const t = {
+      en: {
+        brand:"DKVKOS Apartments — Pag",
+        nav_about:"About", nav_apart:"Apartments", nav_amen:"Amenities", nav_gallery:"Gallery", nav_videos:"Videos", nav_location:"Location", nav_book:"Book",
+        hero_title:"Seaside apartments in Pag",
+        hero_tag:"Wake up to the Adriatic. Modern, air-conditioned apartments for 2–5 guests — just a short walk to the beach.",
+        hero_cta:"View apartments →",
+        f1t:"Sea & city", f1d:"Central Pag location, close to beaches and Old Town.",
+        f2t:"Comfort", f2d:"AC, fast Wi-Fi, smart TV, equipped kitchen.",
+        f3t:"Parking", f3d:"Free private parking on site.",
+        f4t:"Family-friendly", f4d:"Crib / high chair on request, quiet street.",
+        about_title:"About DKVKOS",
+        about_p1:"DKVKOS offers bright, freshly renovated apartments in the town of Pag. Everything you need for a relaxing seaside stay is within walking distance—beach, bakeries, cafés, and the stone streets of the Old Town.",
+        about_p2:"We host couples, families and small groups year-round and speak English & Croatian.",
+        about_high:"Highlights",
+        h1:"2–5 guests per unit", h2:"Balcony or terrace (select units)", h3:"Self check-in available", h4:"Non-smoking, no parties",
+        apart_title:"Apartments",
+        a1_badge:"Sleeps 2–3", a1_title:"Studio Sea View", a1_text:"Open-plan studio with queen bed + single sofa, kitchenette, AC, balcony with partial sea view.", a_from1:"From € — / night",
+        a2_badge:"Sleeps 3–4", a2_title:"One-Bedroom Balcony", a2_text:"Separate bedroom + living room with sofa bed, full kitchen, AC, balcony.", a_from2:"From € — / night",
+        a3_badge:"Sleeps 4–5", a3_title:"Two-Bedroom Family", a3_text:"Two bedrooms, living room, equipped kitchen, AC, terrace for morning coffee.", a_from3:"From € — / night",
+        amen_title:"Amenities",
+        am1:"Fast Wi-Fi", am2:"Air conditioning", am3:"Smart TV", am4:"Equipped kitchen", am5:"Fresh linens & towels", am6:"Washing machine (select units / shared)", am7:"Free private parking",
+        near_title:"Nearby", nr1:"Beaches within a short walk", nr2:"Old Town Pag — cafés, bakeries, shops", nr3:"Restaurants with fresh seafood",
+        gallery_title:"Photo gallery",
+        videos_title:"Videos",
+        loc_title:"Location — Pag, Croatia",
+        loc_txt:"We are in the town of Pag on the island of Pag. Exact address provided with booking. Free parking on site.",
+        loc_cta:"Check availability →",
+        contact_title:"Contact & booking",
+        contact_txt:"Tell us your dates, number of guests, and preferred unit. We’ll reply with availability and a quote.",
+        email:"Email:", phone:"Phone:",
+        book_btn:"Book now via email →",
+        policy_title:"House rules", pol1:"No smoking • No parties", pol2:"Quiet hours 22:00–08:00", pol3:"Pets on request (subject to availability)",
+        footer:"© 2025 DKVKOS Apartments — Pag"
+      },
+      hr: {
+        brand:"DKVKOS Apartmani — Pag",
+        nav_about:"O nama", nav_apart:"Apartmani", nav_amen:"Sadržaji", nav_gallery:"Galerija", nav_videos:"Video", nav_location:"Lokacija", nav_book:"Rezerviraj",
+        hero_title:"Apartmani uz more u Pagu",
+        hero_tag:"Probudi se uz Jadran. Moderni, klimatizirani apartmani za 2–5 gostiju — nekoliko minuta hoda do plaže.",
+        hero_cta:"Pogledaj apartmane →",
+        f1t:"More i grad", f1d:"Središnja lokacija u Pagu, blizu plaža i Starog grada.",
+        f2t:"Udobnost", f2d:"Klima, brzi Wi-Fi, pametni TV, opremljena kuhinja.",
+        f3t:"Parking", f3d:"Besplatno privatno parkiralište u sklopu objekta.",
+        f4t:"Prikladno za obitelji", f4d:"Krevetić / hranilica na upit, mirna ulica.",
+        about_title:"O DKVKOS-u",
+        about_p1:"DKVKOS nudi svijetle, obnovljene apartmane u gradu Pagu. Sve što treba za opušten odmor uz more je na pješačkoj udaljenosti—plaža, pekare, kafići i kamene ulice Starog grada.",
+        about_p2:"Primamo parove, obitelji i manje grupe tijekom cijele godine. Govorimo hrvatski i engleski.",
+        about_high:"Izdvajamo",
+        h1:"2–5 gostiju po jedinici", h2:"Balkon ili terasa (odabrane jedinice)", h3:"Samostalna prijava moguća", h4:"Ne puši se, bez zabava",
+        apart_title:"Apartmani",
+        a1_badge:"Za 2–3 osobe", a1_title:"Studio s pogledom na more", a1_text:"Otvoreni studio s bračnim krevetom + pomoćnim ležajem, čajna kuhinja, klima, balkon s djelomičnim pogledom na more.", a_from1:"Od € — / noć",
+        a2_badge:"Za 3–4 osobe", a2_title:"Jednosobni s balkonom", a2_text:"Odvojena spavaća + dnevni boravak s kaučem, potpuno opremljena kuhinja, klima, balkon.", a_from2:"Od € — / noć",
+        a3_badge:"Za 4–5 osoba", a3_title:"Dvosobni obiteljski", a3_text:"Dvije spavaće, dnevni boravak, opremljena kuhinja, klima, terasa za jutarnu kavu.", a_from3:"Od € — / noć",
+        amen_title:"Sadržaji",
+        am1:"Brzi Wi-Fi", am2:"Klimatizacija", am3:"Pametni TV", am4:"Opremljena kuhinja", am5:"Posteljina i ručnici", am6:"Perilica rublja (neke jedinice / zajednička)", am7:"Besplatan privatni parking",
+        near_title:"U blizini", nr1:"Plaže na nekoliko minuta hoda", nr2:"Stari grad Pag — kafići, pekare, trgovine", nr3:"Restorani sa svježom ribom",
+        gallery_title:"Foto galerija",
+        videos_title:"Video",
+        loc_title:"Lokacija — Pag, Hrvatska",
+        loc_txt:"Nalazimo se u gradu Pagu na otoku Pagu. Točnu adresu šaljemo nakon rezervacije. Parkiranje je besplatno.",
+        loc_cta:"Provjeri dostupnost →",
+        contact_title:"Kontakt i rezervacije",
+        contact_txt:"Pošaljite nam datume, broj gostiju i željeni apartman. Odgovorit ćemo s dostupnošću i ponudom.",
+        email:"Email:", phone:"Telefon:",
+        book_btn:"Rezerviraj putem emaila →",
+        policy_title:"Kućni red", pol1:"Ne puši se • Nema zabava", pol2:"Tišina 22:00–08:00", pol3:"Ljubimci na upit (ovisno o raspoloživosti)",
+        footer:"© 2025 DKVKOS Apartmani — Pag"
+      }
+    };
+
+    function applyTranslations(lang){
+      document.documentElement.lang = lang;
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const key = el.getAttribute('data-i18n');
+        const val = t[lang][key] || '';
+        if(val.includes('<')) el.innerHTML = val; else el.textContent = val;
+      });
+      document.title = lang==='hr' ? 'DKVKOS Apartmani — Pag' : 'DKVKOS Apartments — Pag';
+      localStorage.setItem('lang', lang);
+      document.getElementById('langToggle').setAttribute('aria-label', lang==='hr'?'Change language':'Promijeni jezik');
+    }
+
+    // Init language (remember choice, default by browser)
+    const saved = localStorage.getItem('lang');
+    const prefersHR = (navigator.language || '').toLowerCase().startsWith('hr');
+    let currentLang = saved || (prefersHR ? 'hr' : 'en');
+    applyTranslations(currentLang);
+    document.getElementById('langToggle').addEventListener('click', ()=>{
+      currentLang = currentLang === 'en' ? 'hr' : 'en';
+      applyTranslations(currentLang);
+    });
+  </script>
+</body>
+</html>
